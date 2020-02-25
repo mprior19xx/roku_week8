@@ -34,8 +34,12 @@ import LoginComponent from "./components/LoginComponent.js"
     },
 
     methods: {
-      setAuthenticated(status) {
+      setAuthenticated(status, data) {
+        //this means that our authentication has passed inside the loginComponent, and we have a valid user. 
+        //so set the authenticated property to true, and also store the user here.
         this.authenticated = status;
+        this.administrator = paseInt(data.isadmin); //make sure this is a number not a text
+        this.user = data;
       },
 
       logout() {
@@ -49,4 +53,14 @@ import LoginComponent from "./components/LoginComponent.js"
 
     router: router
   }).$mount("#app");
+
+  router.beforeEach(to, from, next => { 
+    console.log("router guard fired");
+
+    if( vm.authenticated == flase){
+      next('/login');
+    } else{
+      next();s
+    }
+  })
 })();
